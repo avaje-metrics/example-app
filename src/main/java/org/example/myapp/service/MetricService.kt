@@ -4,7 +4,6 @@ import org.avaje.metric.annotation.NotTimed
 import org.avaje.metric.report.MetricReportConfig
 import org.avaje.metric.report.MetricReportManager
 import org.example.extension.loggerFor
-import org.jetbrains.kotlin.resolve.constants.createCompileTimeConstant
 import javax.inject.Inject
 import javax.inject.Singleton
 

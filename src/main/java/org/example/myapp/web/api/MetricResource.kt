@@ -1,9 +1,6 @@
 package org.example.myapp.web.api
 
-import org.avaje.metric.AbstractTimedMetric
-import org.avaje.metric.MetricManager
-import org.avaje.metric.MetricName
-import org.avaje.metric.RequestTiming
+import org.avaje.metric.*
 import org.example.extension.loggerFor
 import javax.inject.Singleton
 import javax.ws.rs.Consumes
@@ -25,8 +22,16 @@ public class MetricResource {
   private val logger = loggerFor(javaClass)
 
   @GET
+  @Path("/allTiming")
+  fun allTiming(): MutableList<TimingMetricInfo>? {
+
+    return MetricManager.getAllTimingMetrics()
+  }
+
+
+  @GET
   @Path("/collecting")
-  fun collecting(): MutableList<AbstractTimedMetric>? {
+  fun collecting(): MutableList<TimingMetricInfo>? {
 
     return MetricManager.getRequestTimingMetrics()
   }
@@ -42,12 +47,12 @@ public class MetricResource {
 
     val clazz = Class.forName(className);
 
-    val metricName = MetricManager.name(clazz, methodName);
-    val timedMetric = MetricManager.getTimedMetric(metricName)
-    timedMetric.setRequestTimingCollection(5)
+//    val metricName = MetricManager.name(clazz, methodName);
+//    val timedMetric = MetricManager.getTimedMetric(metricName)
+//    timedMetric.setRequestTimingCollection(5)
 
-    logger.info("set collect 5 on {}", metricName)
+    val success = MetricManager.setRequestTimingCollection(clazz, methodName, 6);
 
-    return "done"
+    return if (success) "done" else "not found"
   }
 }
