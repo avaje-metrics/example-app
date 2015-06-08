@@ -76,25 +76,25 @@
   <build>
     <plugins>
 
-      <plugin>
-        <groupId>org.avaje.metric</groupId>
-        <artifactId>enhance-maven-plugin</artifactId>
-        <version>4.0.2-SNAPSHOT</version>
-        <executions>
-          <execution>
-            <id>main</id>
-            <phase>process-classes</phase>
-            <configuration>
-              <!--<classSource>target/classes</classSource>-->
-              <packages>org.example.myapp.**</packages>
-              <transformArgs>debug=1</transformArgs>
-            </configuration>
-            <goals>
-              <goal>enhance</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+      <!--<plugin>-->
+        <!--<groupId>org.avaje.metric</groupId>-->
+        <!--<artifactId>enhance-maven-plugin</artifactId>-->
+        <!--<version>4.0.2-SNAPSHOT</version>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<id>main</id>-->
+            <!--<phase>process-classes</phase>-->
+            <!--<configuration>-->
+              <!--&lt;!&ndash;<classSource>target/classes</classSource>&ndash;&gt;-->
+              <!--<packages>org.example.myapp.**</packages>-->
+              <!--<transformArgs>debug=1</transformArgs>-->
+            <!--</configuration>-->
+            <!--<goals>-->
+              <!--<goal>enhance</goal>-->
+            <!--</goals>-->
+          <!--</execution>-->
+        <!--</executions>-->
+      <!--</plugin>-->
 
       <plugin>
         <groupId>org.jetbrains.kotlin</groupId>
