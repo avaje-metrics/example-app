@@ -22,20 +22,34 @@ public class MetricResource {
   private val logger = loggerFor(javaClass)
 
   @GET
-  @Path("/allTiming")
-  fun allTiming(): MutableList<TimingMetricInfo>? {
+  @Path("/allTiming/{match}")
+  fun allTiming(@PathParam("match") match:String): MutableList<TimingMetricInfo>? {
 
-    return MetricManager.getAllTimingMetrics()
+    return MetricManager.getAllTimingMetrics(match)
   }
 
 
   @GET
-  @Path("/collecting")
-  fun collecting(): MutableList<TimingMetricInfo>? {
+  @Path("/requestTiming/{match}")
+  fun collecting(@PathParam("match") match: String): MutableList<TimingMetricInfo>? {
 
-    return MetricManager.getRequestTimingMetrics()
+    return MetricManager.getRequestTimingMetrics(match)
   }
 
+
+  @GET
+  @Path("/collectUsingMatch/{match}/{count}")
+  @Produces(MediaType.TEXT_PLAIN)
+  fun setCollection(@PathParam("match") match: String,
+                    @PathParam("count") count: Int): String {
+
+    logger.info("set collect {} using match {}", count, match)
+
+
+    val metricCount = MetricManager.setRequestTimingCollectionUsingMatch(match, count);
+
+    return "set ${count} on ${metricCount} metrics"
+  }
 
   @GET
   @Path("/collect/{className}/{methodName}")
@@ -46,11 +60,6 @@ public class MetricResource {
     logger.info("set collect 5 on {}.{}", className, methodName)
 
     val clazz = Class.forName(className);
-
-//    val metricName = MetricManager.name(clazz, methodName);
-//    val timedMetric = MetricManager.getTimedMetric(metricName)
-//    timedMetric.setRequestTimingCollection(5)
-
     val success = MetricManager.setRequestTimingCollection(clazz, methodName, 6);
 
     return if (success) "done" else "not found"

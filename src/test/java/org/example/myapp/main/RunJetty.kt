@@ -10,6 +10,7 @@ fun main(args: Array<String>) {
   println("starting jetty ...")
 
   val jettyRun = JettyRun()
+  jettyRun.setHttpPort(9090)
   jettyRun.runServer()
 
 }
