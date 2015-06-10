@@ -34,12 +34,7 @@ and output to a file or sent to a repository.
 Per request timing can be set for specific timing metrics. These produce output like that below
 showing for that single request where the time went.
 
-The columns are: 
-d  = depth
-p  = percentage
-ms = milliseconds
-us = microseconds
-m  = metric name
+The columns are: d=depth, p=percentage, ms=milliseconds, us=microseconds, m=metric name
 
 ```console
 14:00:20  exe:612ms  metric:org.example.myapp.web.api.CustomerResource.asBean
@@ -56,3 +51,4 @@ m  = metric name
    d:5    p:81   ms:500       us:500108                      m:org.example.myapp.service.Muse.iDoTheRealWorkAroundHere
    d:5    p:0    ms:0         us:11                          m:org.example.myapp.service.Muse.notParticularlyResistant
 ```
+CustomerResource.asBean took 612 milliseconds to execute. If you look at Muse.iDoTheRealWorkAroundHere it took 81% of the total execution time (500 milliseconds, 500204 microseconds). 
