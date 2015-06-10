@@ -48,7 +48,7 @@
     <dependency>
       <groupId>org.avaje.metric</groupId>
       <artifactId>avaje-metric-core</artifactId>
-      <version>4.3.1</version>
+      <version>4.4.1</version>
     </dependency>
 
     <dependency>

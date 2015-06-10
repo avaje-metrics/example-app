@@ -5,6 +5,8 @@ import org.example.myapp.common.Customer
 import org.example.myapp.common.CustomerData
 import org.example.myapp.service.EmailMessage
 import org.example.myapp.service.EmailSender
+import org.example.myapp.service.MusicLayer
+import org.example.myapp.service.RadioHead
 import java.sql.Timestamp
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,38 +19,38 @@ import javax.ws.rs.core.MediaType
 /**
  * Customer web resource.
  */
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
 @Singleton
 @Path("/customer")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 open class CustomerResource {
 
   private val logger = loggerFor(javaClass)
 
-  protected val emailSender : EmailSender;
+  protected val musicLayer: MusicLayer;
 
   @Inject
-  constructor(emailSender : EmailSender) {
-    this.emailSender = emailSender;
+  constructor(musicLayer: MusicLayer) {
+    this.musicLayer = musicLayer
   }
 
 
   @Produces(MediaType.TEXT_PLAIN)
   @GET
-  fun hello() : String {
+  fun hello(): String {
 
-    logger.debug("plan boring hello ...")
+    logger.debug("plain boring hello ...")
 
     return "Hello";
   }
 
   @GET
   @Path("/bean")
-  fun asBean() : Customer {
+  fun asBean(): Customer {
 
-    logger.debug("hello bean ...")
+    logger.debug("bean ...")
 
-    emailSender.send(EmailMessage("rob@foo.com", "from@asd.com"))
+    musicLayer.playItSon()
 
     val customer = Customer("Rob", "rob@foo.com")
     customer.lastUpdate = Timestamp(System.currentTimeMillis())
@@ -57,15 +59,15 @@ open class CustomerResource {
 
   @GET
   @Path("/data")
-  fun useData() : List<CustomerData> {
+  fun useData(): List<CustomerData> {
 
-    logger.debug("hello useData ...")
+    logger.debug("data ... (uses a kotlin data bean)")
 
-    val c0 = CustomerData("Rob")
-    val c1 = CustomerData("Jim","jim@foo.com")
-    val c2 = CustomerData("Trevor","trevor@bar.com", Timestamp(System.currentTimeMillis()-900011))
+    val rob = CustomerData("Rob")
+    val jim = CustomerData("Jim", "jim@foo.com")
+    val trev = CustomerData("Trevor", "trevor@bar.com", Timestamp(System.currentTimeMillis() - 900011))
 
-    return listOf(c0, c1, c2);
+    return listOf(rob, jim, trev);
   }
 
 }

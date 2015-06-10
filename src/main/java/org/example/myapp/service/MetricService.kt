@@ -14,17 +14,17 @@ import javax.inject.Singleton
 @Singleton
 public class MetricService {
 
-  private val logger = loggerFor(javaClass)
+    private val logger = loggerFor(javaClass)
 
-  protected val reporter : MetricReportManager
+    protected val reporter: MetricReportManager
 
-  @Inject
-  constructor() {
+    @Inject
+    constructor() {
 
-    logger.debug("initialise the MetricReportManager")
-    val config = MetricReportConfig()
-    config.setFreqInSeconds(10)
+        logger.debug("initialise the MetricReportManager")
+        val config = MetricReportConfig()
+        config.setFreqInSeconds(10)
 
-    reporter = MetricReportManager(config)
-  }
+        reporter = MetricReportManager(config)
+    }
 }

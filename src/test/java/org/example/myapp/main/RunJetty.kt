@@ -7,10 +7,10 @@ import org.avaje.jettyrunner.JettyRun
  */
 fun main(args: Array<String>) {
 
-  println("starting jetty ...")
+    println("starting jetty ...")
 
-  val jettyRun = JettyRun()
-  jettyRun.setHttpPort(9090)
-  jettyRun.runServer()
+    val jettyRun = JettyRun()
+    jettyRun.setHttpPort(9090)
+    jettyRun.runServer()
 
 }

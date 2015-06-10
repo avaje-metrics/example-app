@@ -10,9 +10,10 @@
   </appender>
 
   <root level="WARN">
-    <appender-ref ref="STDOUT" />
+    <appender-ref ref="STDOUT"/>
   </root>
 
-  <logger name="org.example" level="DEBUG" />
+  <logger name="org.avaje.metric" level="INFO"/>
+  <logger name="org.example" level="TRACE"/>
 
 </configuration>

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory
 import javax.inject.Singleton
 
 /**
- * Created by rob on 8/06/15.
+ * A very efficient email sender implementation based on not sending at all.
  */
 @Singleton
 public class DummyEmailSender : EmailSender {
@@ -14,7 +14,10 @@ public class DummyEmailSender : EmailSender {
 
   override fun send(message: EmailMessage) {
 
-    logger.debug("sending message ... but not really")
+    yeahNah()
+  }
 
+  fun yeahNah() {
+    logger.debug("sending message ... yeah, nah!")
   }
 }

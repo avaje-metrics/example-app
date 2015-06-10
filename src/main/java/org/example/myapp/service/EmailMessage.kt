@@ -5,9 +5,9 @@ package org.example.myapp.service
  */
 public class EmailMessage(
 
-    val to: String,
+        val to: String,
 
-    val from: String) {
+        val from: String) {
 
-  var message: String = ""
+    var message: String = ""
 }

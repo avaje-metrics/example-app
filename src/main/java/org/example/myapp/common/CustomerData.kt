@@ -5,11 +5,11 @@ import java.sql.Timestamp
 /**
  * Simple data class example.
  */
-public data class CustomerData (
+public data class CustomerData(
 
-    val name: String,
+        val name: String,
 
-    val email: String = "na", // default
+        val email: String = "na", // default
 
-    val lastUpdate: Timestamp = Timestamp(System.currentTimeMillis()) // default
+        val lastUpdate: Timestamp = Timestamp(System.currentTimeMillis()) // default
 )

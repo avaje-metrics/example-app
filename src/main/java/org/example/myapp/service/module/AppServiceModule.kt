@@ -6,6 +6,7 @@ import org.example.extension.loggerFor
 import org.example.myapp.service.DummyEmailSender
 import org.example.myapp.service.EmailSender
 import org.example.myapp.service.MetricService
+import org.example.myapp.service.RadioHead
 import kotlin.reflect.jvm.java
 
 /**
@@ -13,21 +14,20 @@ import kotlin.reflect.jvm.java
  */
 public class AppServiceModule : AbstractModule() {
 
-  private val logger = loggerFor(javaClass)
+    private val logger = loggerFor(javaClass)
 
-//  inline fun <reified T> AppServiceModule.bind() = bind(javaClass<T>())
-//
-//  inline fun <reified T> AnnotatedBindingBuilder<in T>.to() = to(javaClass<T>())
+    //  inline fun <reified T> AppServiceModule.bind() = bind(javaClass<T>())
+    //  inline fun <reified T> AnnotatedBindingBuilder<in T>.to() = to(javaClass<T>())
+    //  bind<MetricService>().asEagerSingleton()
+    //  bind<EmailSender>().to<DummyEmailSender>()
 
-  override fun configure() {
+    override fun configure() {
 
-    logger.debug("configuring module ...")
+        logger.debug("configuring module ...")
 
-    bind(MetricService::class.java).asEagerSingleton()
-    bind(EmailSender::class.java).to(DummyEmailSender::class.java)
-
-//    bind<MetricService>().asEagerSingleton()
-//    bind<EmailSender>().to<DummyEmailSender>()
-  }
+        bind(MetricService::class.java).asEagerSingleton()
+        bind(RadioHead::class.java).asEagerSingleton()
+        bind(EmailSender::class.java).to(DummyEmailSender::class.java)
+    }
 
 }

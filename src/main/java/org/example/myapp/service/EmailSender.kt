@@ -5,7 +5,7 @@ package org.example.myapp.service
  */
 public interface EmailSender {
 
-  fun send(message : EmailMessage)
+    fun send(message: EmailMessage)
 }
 
 

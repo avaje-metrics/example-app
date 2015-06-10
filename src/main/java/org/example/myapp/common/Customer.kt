@@ -7,11 +7,11 @@ import java.sql.Timestamp
  */
 public class Customer(
 
-  var name: String,
+        var name: String,
 
-  var email: String
-){
+        var email: String
+) {
 
-  var lastUpdate: Timestamp? = null
+    var lastUpdate: Timestamp? = null
 
 }

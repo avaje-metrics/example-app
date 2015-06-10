@@ -19,49 +19,46 @@ import javax.ws.rs.core.MediaType
 @Produces(MediaType.APPLICATION_JSON)
 public class MetricResource {
 
-  private val logger = loggerFor(javaClass)
+    private val logger = loggerFor(javaClass)
 
-  @GET
-  @Path("/allTiming/{match}")
-  fun allTiming(@PathParam("match") match:String): MutableList<TimingMetricInfo>? {
+    @GET
+    @Path("/allTiming/{match}")
+    fun allTiming(@PathParam("match") match: String): MutableList<TimingMetricInfo>? {
 
-    return MetricManager.getAllTimingMetrics(match)
-  }
-
-
-  @GET
-  @Path("/requestTiming/{match}")
-  fun collecting(@PathParam("match") match: String): MutableList<TimingMetricInfo>? {
-
-    return MetricManager.getRequestTimingMetrics(match)
-  }
+        return MetricManager.getAllTimingMetrics(match)
+    }
 
 
-  @GET
-  @Path("/collectUsingMatch/{match}/{count}")
-  @Produces(MediaType.TEXT_PLAIN)
-  fun setCollection(@PathParam("match") match: String,
-                    @PathParam("count") count: Int): String {
+    @GET
+    @Path("/requestTiming/{match}")
+    fun collecting(@PathParam("match") match: String): MutableList<TimingMetricInfo>? {
 
-    logger.info("set collect {} using match {}", count, match)
+        return MetricManager.getRequestTimingMetrics(match)
+    }
 
 
-    val metricCount = MetricManager.setRequestTimingCollectionUsingMatch(match, count);
+    @GET
+    @Path("/collectUsingMatch/{match}/{count}")
+    fun setCollection(@PathParam("match") match: String,
+                      @PathParam("count") count: Int): MutableList<TimingMetricInfo>? {
 
-    return "set ${count} on ${metricCount} metrics"
-  }
+        logger.info("set collect {} using match {}", count, match)
 
-  @GET
-  @Path("/collect/{className}/{methodName}")
-  @Produces(MediaType.TEXT_PLAIN)
-  fun setCollection(@PathParam("className") className: String,
-                    @PathParam("methodName") methodName: String): String {
 
-    logger.info("set collect 5 on {}.{}", className, methodName)
+        return MetricManager.setRequestTimingCollectionUsingMatch(match, count);
+    }
 
-    val clazz = Class.forName(className);
-    val success = MetricManager.setRequestTimingCollection(clazz, methodName, 6);
+    @GET
+    @Path("/collect/{className}/{methodName}")
+    @Produces(MediaType.TEXT_PLAIN)
+    fun setCollection(@PathParam("className") className: String,
+                      @PathParam("methodName") methodName: String): String {
 
-    return if (success) "done" else "not found"
-  }
+        logger.info("set collect 5 on {}.{}", className, methodName)
+
+        val clazz = Class.forName(className);
+        val success = MetricManager.setRequestTimingCollection(clazz, methodName, 6);
+
+        return if (success) "done" else "not found"
+    }
 }
