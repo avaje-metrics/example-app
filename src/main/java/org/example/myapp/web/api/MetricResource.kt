@@ -2,6 +2,7 @@ package org.example.myapp.web.api
 
 import org.avaje.metric.*
 import org.example.extension.loggerFor
+import javax.inject.Inject
 import javax.inject.Singleton
 import javax.ws.rs.Consumes
 import javax.ws.rs.GET
@@ -20,6 +21,20 @@ import javax.ws.rs.core.MediaType
 public class MetricResource {
 
     private val logger = loggerFor(javaClass)
+
+    private val metricEvents : MetricEvents
+
+    @Inject
+    constructor(metricEvents : MetricEvents){
+        this.metricEvents = metricEvents
+    }
+
+    @GET
+    @Path("/broadcast/{message}")
+    fun testBroadcast(@PathParam("message") message: String): Int {
+
+        return metricEvents.broadCast(message)
+    }
 
     @GET
     @Path("/allTiming/{match}")
@@ -44,7 +59,6 @@ public class MetricResource {
 
         logger.info("set collect {} using match {}", count, match)
 
-
         return MetricManager.setRequestTimingCollectionUsingMatch(match, count);
     }
 
@@ -54,7 +68,7 @@ public class MetricResource {
     fun setCollection(@PathParam("className") className: String,
                       @PathParam("methodName") methodName: String): String {
 
-        logger.info("set collect 5 on {}.{}", className, methodName)
+        logger.info("set collect 8 on {}.{}", className, methodName)
 
         val clazz = Class.forName(className);
         val success = MetricManager.setRequestTimingCollection(clazz, methodName, 6);

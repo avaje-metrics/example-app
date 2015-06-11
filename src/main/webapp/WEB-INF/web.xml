@@ -7,21 +7,25 @@
     <param-value>org.example.myapp.web.module.WebModule</param-value>
   </context-param>
 
+  <!-- Bootstrap that registers Guice webSocket singletons -->
   <listener>
     <listener-class>
-      org.jboss.resteasy.plugins.guice.GuiceResteasyBootstrapServletContextListener
+      org.avaje.resteasy.Bootstrap
     </listener-class>
   </listener>
 
   <filter>
-    <filter-name>Resteasy</filter-name>
-    <filter-class>
-      org.jboss.resteasy.plugins.server.servlet.FilterDispatcher
-    </filter-class>
+    <!--<description>Extended Resteasy filter</description>-->
+    <filter-name>RestFilter</filter-name>
+    <filter-class>org.avaje.resteasy.RestFilter</filter-class>
+    <init-param>
+      <param-name>ignore</param-name>
+      <param-value>(/favicon.ico|/(assets|images|fonts|css|js|res)/.*)</param-value>
+    </init-param>
   </filter>
 
   <filter-mapping>
-    <filter-name>Resteasy</filter-name>
+    <filter-name>RestFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 

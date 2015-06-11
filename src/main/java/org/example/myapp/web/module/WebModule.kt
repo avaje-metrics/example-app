@@ -11,6 +11,8 @@ import org.example.extension.loggerFor
 import org.example.myapp.service.DummyEmailSender
 import org.example.myapp.service.EmailSender
 import org.example.myapp.service.module.AppServiceModule
+import org.example.myapp.web.api.IndexResource
+import org.example.myapp.web.api.MetricEvents
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.java
@@ -27,7 +29,8 @@ public class WebModule : AbstractModule() {
         logger.debug("configuring module ...")
 
         install(AppServiceModule())
-
+        bind(MetricEvents::class.java).asEagerSingleton()
+        bind(IndexResource::class.java).asEagerSingleton()
         bind(CustomerResource::class.java).asEagerSingleton()
         bind(MetricResource::class.java).asEagerSingleton()
 
