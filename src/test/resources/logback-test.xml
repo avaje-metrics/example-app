@@ -13,8 +13,8 @@
     <appender-ref ref="STDOUT"/>
   </root>
 
-  <logger name="org.avaje.resteasy" level="TRACE"/>
-  <logger name="org.avaje.metric" level="INFO"/>
+  <logger name="org.avaje" level="TRACE"/>
+  <logger name="org.avaje.metric" level="TRACE"/>
   <logger name="org.example" level="TRACE"/>
 
 </configuration>

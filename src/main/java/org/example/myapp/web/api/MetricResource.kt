@@ -20,59 +20,77 @@ import javax.ws.rs.core.MediaType
 @Produces(MediaType.APPLICATION_JSON)
 public class MetricResource {
 
-    private val logger = loggerFor(javaClass)
+  private val logger = loggerFor(javaClass)
 
-    private val metricEvents : MetricEvents
+  private val metricEvents: MetricWebSocket
 
-    @Inject
-    constructor(metricEvents : MetricEvents){
-        this.metricEvents = metricEvents
-    }
+  @Inject
+  constructor(metricEvents: MetricWebSocket) {
+    this.metricEvents = metricEvents
+  }
 
-    @GET
-    @Path("/broadcast/{message}")
-    fun testBroadcast(@PathParam("message") message: String): Int {
+  /**
+   * Return all the timing metrics.
+   */
+  @GET
+  @Path("/allTiming/{match}")
+  fun allTiming(@PathParam("match") match: String): MutableList<TimingMetricInfo>? {
 
-        return metricEvents.broadCast(message)
-    }
+    return MetricManager.getAllTimingMetrics(match)
+  }
 
-    @GET
-    @Path("/allTiming/{match}")
-    fun allTiming(@PathParam("match") match: String): MutableList<TimingMetricInfo>? {
+  /**
+   * Return all the timing metrics that are active 'request timing'.
+   */
+  @GET
+  @Path("/requestTiming/{match}")
+  fun collecting(@PathParam("match") match: String): MutableList<TimingMetricInfo>? {
 
-        return MetricManager.getAllTimingMetrics(match)
-    }
-
-
-    @GET
-    @Path("/requestTiming/{match}")
-    fun collecting(@PathParam("match") match: String): MutableList<TimingMetricInfo>? {
-
-        return MetricManager.getRequestTimingMetrics(match)
-    }
+    return MetricManager.getRequestTimingMetrics(match)
+  }
 
 
-    @GET
-    @Path("/collectUsingMatch/{match}/{count}")
-    fun setCollection(@PathParam("match") match: String,
-                      @PathParam("count") count: Int): MutableList<TimingMetricInfo>? {
+  /**
+   * Set the number of request timings to collect on the timing metrics that match the matchExpression.
+   *
+   * @param matchExpression the expression using '*' wildcard to match timing metrics
+   * @param count the number of requests to collect per request timing on
+   */
+  @GET
+  @Path("/collectUsingMatch/{matchExpression}/{count}")
+  fun setCollection(@PathParam("matchExpression") matchExpression: String,
+                    @PathParam("count") count: Int): MutableList<TimingMetricInfo>? {
 
-        logger.info("set collect {} using match {}", count, match)
+    logger.info("set collect {} using matchExpression {}", count, matchExpression)
 
-        return MetricManager.setRequestTimingCollectionUsingMatch(match, count);
-    }
+    return MetricManager.setRequestTimingCollectionUsingMatch(matchExpression, count);
+  }
 
-    @GET
-    @Path("/collect/{className}/{methodName}")
-    @Produces(MediaType.TEXT_PLAIN)
-    fun setCollection(@PathParam("className") className: String,
-                      @PathParam("methodName") methodName: String): String {
+  /**
+   * Collect request timing on a specific timing metric based on the className and methodName.
+   */
+  @GET
+  @Path("/collect/{className}/{methodName}")
+  @Produces(MediaType.TEXT_PLAIN)
+  fun setCollection(@PathParam("className") className: String,
+                    @PathParam("methodName") methodName: String): String {
 
-        logger.info("set collect 8 on {}.{}", className, methodName)
+    logger.info("set collect 8 on {}.{}", className, methodName)
 
-        val clazz = Class.forName(className);
-        val success = MetricManager.setRequestTimingCollection(clazz, methodName, 6);
+    val clazz = Class.forName(className);
+    val success = MetricManager.setRequestTimingCollection(clazz, methodName, 6);
 
-        return if (success) "done" else "not found"
-    }
+    return if (success) "done" else "not found"
+  }
+
+  /**
+   * Test endpoint to broadcast a message to webSocket listeners.
+   */
+  @GET
+  @Path("/broadcast/{message}")
+  fun testBroadcast(@PathParam("message") message: String): Int {
+
+    return metricEvents.broadcast(message)
+  }
+
 }

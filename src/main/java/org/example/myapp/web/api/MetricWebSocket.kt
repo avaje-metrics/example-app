@@ -1,6 +1,7 @@
 package org.example.myapp.web.api
 
 import org.example.extension.loggerFor
+import org.example.myapp.service.MetricBroadcast
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Singleton
 import javax.websocket.OnClose
@@ -10,11 +11,11 @@ import javax.websocket.Session
 import javax.websocket.server.ServerEndpoint
 
 /**
- *
+ * WebSocket endpoint used to broadcast metric request timing's to interested clients.
  */
 @Singleton
-@ServerEndpoint("/socket")
-public class MetricEvents {
+@ServerEndpoint("/metric-ws")
+public class MetricWebSocket : MetricBroadcast {
 
   private val log = loggerFor(javaClass)
 
@@ -23,7 +24,7 @@ public class MetricEvents {
   /**
    * Send a message to all the clients.
    */
-  fun broadCast(message : String): Int {
+  override fun broadcast(message : String): Int {
 
     var count = 0;
     val sessions = sessionMap.values()
@@ -48,7 +49,7 @@ public class MetricEvents {
       }
     }
 
-    return "got (" + message + ") sending back";
+    return "echo back (" + message + ")";
   }
 
   @OnOpen

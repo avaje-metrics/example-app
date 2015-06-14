@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8"/>
-<title>WebSocket Test</title>
+<title>Metrics Request timing</title>
 <script language="javascript" type="text/javascript">
-    var wsUri = "ws://127.0.0.1:9090/socket";
+    var wsUri = "ws://127.0.0.1:9090/metric-ws";
     var output;
-
-    function test() {
-        var msg = document.getElementById("msg");
-        doSend("from rob "+msg.value);
-    }
     function doClose() {
         websocket.close();
     }
@@ -34,22 +29,16 @@
         };
     }
     function onOpen(evt) {
-        writeToScreen("CONNECTED");
-        doSend("WebSocket rocks");
+        document.getElementById("status").innerHTML = "connected";
     }
     function onClose(evt) {
         writeToScreen("DISCONNECTED");
     }
     function onMessage(evt) {
-        writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data + '</span>');
-        //websocket.close();
+        writeToScreen('<span style="color: blue;"><pre>' + evt.data + '</pre></span>');
     }
     function onError(evt) {
         writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
-    }
-    function doSend(message) {
-        writeToScreen("SENT: " + message);
-        websocket.send(message);
     }
     function writeToScreen(message) {
         var pre = document.createElement("p");
@@ -60,12 +49,7 @@
     window.addEventListener("load", init, false);
 </script>
 <body>
-<h2>WebSocket Test</h2>
-
-<input id="msg" value="">
+<h2>Metric Request Timing Listener: <span id="status"></span></h2>
 <div id="output"></div>
-
-<button onclick="test();">send</button>
-<button onclick="doClose();">close</button>
 </body>
 </html>
