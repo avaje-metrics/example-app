@@ -31,7 +31,6 @@ public class WebModule : AbstractModule() {
     bind(IndexResource::class.java).asEagerSingleton()
     bind(CustomerResource::class.java).asEagerSingleton()
     bind(MetricResource::class.java).asEagerSingleton()
-    bind(JunkWebSocket::class.java).asEagerSingleton()
   }
 
 }

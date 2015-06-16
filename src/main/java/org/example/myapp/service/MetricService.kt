@@ -31,17 +31,17 @@ public class MetricService {
   constructor(broadcast: MetricBroadcast) {
 
     logger.debug("initialise the MetricReportManager")
-
     this.broadcast = broadcast
+    // threshold of 0 percent
+    requestWriter = BasicRequestTimingWriter(0)
+
+
     val config = MetricReportConfig()
     // report aggregate statistics every 10 seconds
     config.setFreqInSeconds(10)
     // can set threshold to say 1 percent (to reduce noise)
-    config.setRequestTimingThreshold(0)
+    //config.setRequestTimingThreshold(0)
     config.addRequestTimingListener(Listener())
-
-    // threshold of 1 percent
-    requestWriter = BasicRequestTimingWriter(1)
 
     reporter = MetricReportManager(config)
   }
